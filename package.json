@@ -16,5 +16,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "tuomas.salo@iki.fi",
-  "license": "ISC"
+  "license": "ISC",
+  "poi": {
+    "entry": "./src/index.js"
+  }
 }
