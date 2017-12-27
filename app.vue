@@ -3,8 +3,9 @@
     <VueFullScreenFileDrop @drop='onDrop'>
       <div id="drop">Drop a recording.json here.</div>
     </VueFullScreenFileDrop>
-    <div class="message" v-if="state === STATES.HELLO">
-      Test your pointing device skills and equipment by clicking through {{targetCount}} rectangles.
+    <div class="message message-hello" v-if="state === STATES.HELLO">
+      Test your pointing device skills and equipment by clicking through
+      {{targetCount}} rectangles.
       <br>
       Then download and share the resulting recording.
       <br>
@@ -12,8 +13,93 @@
       <button @click.stop="start(TARGET_SIZES.MEDIUM)">Medium</button>
       <button @click.stop="start(TARGET_SIZES.SMALL)">Hard</button>
       <br>
-      Or, <a href="#" @click.prevent="activateFileInput">upload</a> or drop a recording.json file here to replay a recording.
+      Or, <a href="#" @click.prevent="activateFileInput">upload</a> or
+      drop a recording.json file here to replay a recording.
       <input type="file" ref="file" @change="fileChosen">
+      <br><br>
+      <a href="#" @click.prevent="goToFaq">Why, oh why?</a>
+    </div>
+    <div id="faq" v-if="state === STATES.FAQ">
+      <a href="#" @click.prevent="goToHello">&laquo; back</a>
+      <dl>
+        <dt>Why, oh why?</dt>
+        <dd>
+          This tool helps to debug problems related to pointing devices such as
+          mice and eye trackers, and their drivers. Users can easily share their
+          recordings with each other and device driver authors, without having
+          to use screencast software.
+        </dd>
+
+        <dt>Why 21?</dt>
+        <dd>
+          This tools measures the clicking paths between each corner
+          (actually, near-corner) of the screen and the center. It takes
+          21 clicks to traverse all the possible paths in both directions.
+        </dd>
+
+        <dt>Is this a reaction test?</dt>
+        <dd>
+          No. The order of the rectangles is not that random. In fact, the tool
+          should include a hint of the location of the next rectangle.
+        </dd>
+
+        <dt>How about touch devices?</dt>
+        <dd>
+          The test tracks cursor movement and clicks. While touch (only) devices
+          don't have a cursor, one can test e.g. finger reach.
+        </dd>
+
+        <dt>Are test results comparable?</dt>
+        <dd>
+          To some extent, I believe. Each run contains the same moves.
+        </dd>
+
+        <dt>What about my privacy? You are tracking my every move!</dt>
+        <dd>
+          I'm not! Only your browser is. Nothing is sent to the server, not even
+          when you upload a recording.
+        </dd>
+
+        <dt>I found a bug.</dt>
+        <dd>
+          That's unfortunate. I hope you take the time to
+          <a href="https://github.com/tuomassalo/21clicks/issues/new">report
+          it</a>.
+        </dd>
+
+        <dt>I found a way to cheat.</dt>
+        <dd>
+          Cool.
+        </dd>
+
+        <dt>I'd like to see some fancy stats.</dt>
+        <dd>
+          That's great! You can download the data in the json file, in a
+          relatively simple format: each element of the <tt>moves</tt> array has
+          these elements:
+          <ul>
+            <li>timestamp</li>
+            <li>pointer x coordinate (pixels)</li>
+            <li>pointer y coordinate (pixels)</li>
+            <li>one of these:
+              <ul>
+                <li>
+                  coordinates and size of the next rectangle, indicating a
+                  successful click
+                </li>
+                <li>
+                  <tt>{misclick: true}</tt>, indicating a misclick
+                </li>
+                <li>
+                  neither
+                </li>
+              </ul>
+            </li>
+          </ul>
+          Pull requests are welcome.
+        </dd>
+
+      </dl>
     </div>
     <div class="message" v-if="state === STATES.ABORTED">
       Timeout. Recording aborted.
@@ -23,7 +109,8 @@
       </button>
     </div>
     <div class="message" v-if="state === STATES.DONE">
-      Clicked through {{recording.targetCount}} rectangles in {{recording.elapsedTime/1000}} s.
+      Clicked through {{recording.targetCount}} rectangles
+      in {{recording.elapsedTime/1000}} s.
       <br>
       <button @click.stop="goToHello">
         Start again
@@ -46,7 +133,7 @@
       } : {}">
       <div
         id="target"
-        v-if="target && (state === STATES.RECORDING || state === STATES.REPLAYING)"
+        v-if="target"
         :style="{
           width: target.size + 'px',
           height: target.size + 'px',
@@ -55,18 +142,30 @@
         }"
         @click.stop="clickTarget"
       ></div>
-      <div id="replayCursor" v-if="replayCursor && (state === STATES.RECORDING || state === STATES.REPLAYING)" :style="{
-        left: replayCursor.x - 5 + 'px',
-        top: replayCursor.y - 5 + 'px',
-      }"></div>
+      <div
+        id="replayCursor"
+        v-if="replayCursor"
+        :style="{
+          left: replayCursor.x - 5 + 'px',
+          top: replayCursor.y - 5 + 'px',
+        }"
+      ></div>
       <transition-group name="fadeout" tag="div">
-        <div class="replayClickIndicator" :class="[i.misclick ? 'misclick' : '']" v-for="i of replayClickIndicators" :key="i.id" :style="{
-          left: i.x - 5 + 'px',
-          top: i.y - 5 + 'px',
-        }"></div>
+        <div
+          class="replayClickIndicator"
+          :class="[i.misclick ? 'misclick' : '']"
+          v-for="i of replayClickIndicators"
+          :key="i.id"
+          :style="{
+            left: i.x - 5 + 'px',
+            top: i.y - 5 + 'px',
+          }"
+        ></div>
     </transition-group>
     </div>
-    <a v-if="state === STATES.HELLO" href="https://github.com/tuomassalo/21clicks"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <a
+      v-if="state === STATES.HELLO"
+      href="https://github.com/tuomassalo/21clicks"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
   </div>
 </template>
 
@@ -84,6 +183,7 @@ const STATES = {
   ABORTED: 'ABORTED',
   DONE: 'DONE',
   REPLAYING: 'REPLAYING',
+  FAQ: 'FAQ',
 }
 const TARGET_SIZES = {
   SMALL: 16,
@@ -148,7 +248,11 @@ export default {
 
           this.windowWidth = window.innerWidth
           this.windowHeight = window.innerHeight
-          this.targets = initTargets(this.windowWidth, this.windowHeight, targetSize)
+          this.targets = initTargets(
+            this.windowWidth,
+            this.windowHeight,
+            targetSize,
+          )
           this.clickedTargetCount = -1
 
           this.recording = {
@@ -286,6 +390,9 @@ export default {
         1,
       )
     },
+    goToFaq() {
+      this.state = STATES.FAQ
+    },
     goToHello() {
       this.state = STATES.HELLO
       this.target = null
@@ -394,6 +501,25 @@ export default {
     top: 50%;
     transform: perspective(1px) translateY(-50%);
     -webkit-transform: perspective(1px) translateY(-50%);
+  }
+  tt {
+    font-family: 'Source Code Pro', monospace;
+    background: rgba(0, 0, 0, .05);
+    padding: 5px;
+  }
+  #faq {
+    padding: 30px;
+    height: 100%;
+    overflow: auto;
+  }
+  #faq dl {
+    max-width: 700px;
+    margin: auto;
+  }
+  #faq dt {
+    margin-top: 1em;
+    font-size: 150%;
+    border-bottom: 1px solid black;
   }
   button {
     padding: 1.8vw 2vw;
