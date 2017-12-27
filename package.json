@@ -1,0 +1,20 @@
+{
+  "name": "21 Clicks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "4.13.1",
+    "poi": "9.6.3",
+    "vue-full-screen-file-drop": "1.0.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-html": "4.0.1",
+    "eslint-plugin-vue": "4.0.0-beta.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tuomas.salo@iki.fi",
+  "license": "ISC"
+}
