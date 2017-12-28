@@ -89,7 +89,6 @@ export default {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
   }
   tt {
     font-family: 'Source Code Pro', monospace;

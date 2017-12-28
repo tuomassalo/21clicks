@@ -14,7 +14,7 @@
         top: target.y - target.size / 2 + 'px',
       }"
       @click.stop="clickTarget"
-    ></div>
+    ><div>{{target.number}}</div></div>
     <div
       id="replayCursor"
       v-if="replayCursor"
@@ -58,10 +58,20 @@ export default {
 }
 div#target {
   position: absolute;
-  background: #65994A;
+  background: #E56000;
+  cursor: pointer;
+}
+div#target div {
+  margin: auto;
+  text-align: center;
+  color: white;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 div#target:hover {
-  border: 3px solid rgba(255, 255, 255, .3);
+  /*border: 3px solid rgba(255, 255, 255, .3);*/
+  outline: 3px solid #E5600088;
 }
 #replayCursor {
   border-radius: 50%;

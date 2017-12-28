@@ -60,10 +60,10 @@ export default function initTargets(
 
   // NB: elements of the target array refer to same objects, so we would need to
   // make copies to enable different sizes.
-  for (const target of targets) {
-    target.size = targetSize
+  const ret = []
+  for (const t of targets) {
+    ret.push({...t, size: targetSize, number: ret.length + 1})
   }
-
   // return [targets[0], targets[1]]
-  return targets
+  return ret
 }

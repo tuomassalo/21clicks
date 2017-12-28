@@ -113,17 +113,17 @@ export default {
         }, 2000)
       }, 100)
     },
-    drawTarget({x, y, size}) {
+    drawTarget({x, y, size, number}) {
       x = Math.max(size, x)
       x = Math.min(this.windowWidth - size, x)
       y = Math.max(size, y)
       y = Math.min(this.windowHeight - size, y)
-      this.target = {x, y, size}
+      this.target = {x, y, size, number}
       moves.push([
         performance.now(),
         this.currentX,
         this.currentY,
-        {type: 'drawTarget', x, y, size},
+        {type: 'drawTarget', x, y, size, number},
       ])
     },
     clickTarget() {

@@ -65,9 +65,9 @@
           <li>possibly one of these:
             <ul>
               <li>
-                <tt>{type: 'drawTarget', x, y, size}</tt> –
-                coordinates and size of the next rectangle (indicating a
-                successful click)
+                <tt>{type: 'drawTarget', x, y, size, number}</tt> –
+                coordinates, size and the visible number of the next rectangle
+                (indicating a successful click)
               </li>
               <li>
                 <tt>{type: 'click'}</tt>, indicating a successful click
