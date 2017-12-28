@@ -34,5 +34,9 @@ export default new Router({
       path: '/stats',
       component: VStats,
     },
+    {
+      path: '/*',
+      redirect: '/',
+    },
   ],
 })
