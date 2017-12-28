@@ -58,7 +58,7 @@ export default {
 }
 div#target {
   position: absolute;
-  background: #88f;
+  background: #143A53;
 }
 div#target:hover {
   border: 3px solid blue;

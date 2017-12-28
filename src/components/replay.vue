@@ -128,6 +128,6 @@ export default {
 }
 #playground {
   /* HACK: break through 'scoped' here with 'important' */
-  border-color: yellow !important;
+  border-color: #FFFF58 !important;
 }
 </style>
