@@ -37,6 +37,7 @@ export default {
       targets: [],
       currentX: null,
       currentY: null,
+      startTime: null,
     }
   },
   props: ['targetCount'],

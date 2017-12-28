@@ -26,14 +26,14 @@
 import VueFullScreenFileDrop from 'vue-full-screen-file-drop'
 import 'vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css'
 import utils from '../utils'
+import initTargets from '../init-targets'
 import constants from '../constants'
 import VGithubRibbon from './github-ribbon'
 
 export default {
-  props: ['targetCount'],
   data() {
     return {
-      // constants,
+      targetCount: initTargets().length,
     }
   },
   components: {
@@ -59,5 +59,18 @@ export default {
 <style scoped>
   div.full {
     height: 100%;
+  }
+  input {
+    display: none;
+  }
+  #drop {
+    font-size: 50px;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    color: white;
   }
 </style>
