@@ -39,8 +39,12 @@ export default {
     })
   },
   created() {
-    this.$parent.$on(constants.events.KEY_ESC, () => {
+    this.onWhenActive(constants.events.KEY_ESC, () => {
       this.stopReplay()
+    })
+
+    this.onWhenActive(constants.events.RESIZE, () => {
+      this.updateReplayScale()
     })
   },
   mounted() {

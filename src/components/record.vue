@@ -60,15 +60,23 @@ export default {
       vm.startRecording(targetSize)
     })
   },
+  created() {
+    this.onWhenActive(constants.events.RESIZE, () => {
+      if (this.recorder) {
+        this.stopRecording()
+      }
+    })
+  },
   mounted() {
     window.addEventListener('mousemove', e => {
       this.currentX = e.pageX
       this.currentY = e.pageY
     })
-    this.$parent.$on(constants.events.KEY_ESC, () => {
+    this.onWhenActive(constants.events.KEY_ESC, () => {
+      console.log('stopRec')
       this.stopRecording()
     })
-    this.$parent.$on(constants.events.KEY_S, () => {
+    this.onWhenActive(constants.events.KEY_S, () => {
       this.clickTarget()
     })
   },
@@ -155,6 +163,7 @@ export default {
     stopRecording(isTimeout) {
       fullScreen.end()
       clearInterval(this.recorder)
+      this.recorder = null
       // change timestamps to start from zero.
       const offset = moves[0][0]
       for (const m of moves) {
