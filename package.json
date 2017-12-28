@@ -6,7 +6,8 @@
   "dependencies": {
     "eslint": "4.13.1",
     "poi": "9.6.3",
-    "vue-full-screen-file-drop": "1.0.0"
+    "vue-full-screen-file-drop": "1.0.0",
+    "vue-router": "3.0.1"
   },
   "devDependencies": {
     "eslint-plugin-html": "4.0.1",

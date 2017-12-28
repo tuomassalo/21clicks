@@ -1,4 +1,8 @@
-export default function initTargets(windowWidth = 1, windowHeight = 1, targetSize) {
+export default function initTargets(
+  windowWidth = 1,
+  windowHeight = 1,
+  targetSize,
+) {
   function shuffle(origArray) {
     const a = [].concat(origArray)
     for (let i = a.length - 1; i > 0; i--) {
@@ -9,7 +13,12 @@ export default function initTargets(windowWidth = 1, windowHeight = 1, targetSiz
   }
 
   const center = {x: windowWidth / 2, y: windowHeight / 2}
-  const corners = [{x: 0, y: 0}, {x: 0, y: windowHeight}, {x: windowWidth, y: 0}, {x: windowWidth, y: windowHeight}]
+  const corners = [
+    {x: 0, y: 0},
+    {x: 0, y: windowHeight},
+    {x: windowWidth, y: 0},
+    {x: windowWidth, y: windowHeight},
+  ]
 
   const targets = []
 
@@ -19,7 +28,10 @@ export default function initTargets(windowWidth = 1, windowHeight = 1, targetSiz
   for (const sourceCorner of shuffle(corners)) {
     targets.push(center)
     for (const destinationCorner of shuffle(corners)) {
-      if (!doneCorners.has(destinationCorner) && sourceCorner !== destinationCorner) {
+      if (
+        !doneCorners.has(destinationCorner) &&
+        sourceCorner !== destinationCorner
+      ) {
         targets.push(sourceCorner, destinationCorner)
       }
       doneCorners.add(sourceCorner)
