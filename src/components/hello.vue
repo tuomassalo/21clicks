@@ -1,8 +1,5 @@
 <template>
   <div class="full">
-    <VueFullScreenFileDrop @drop='onDrop'>
-      <div id="drop">Drop a recording.json here.</div>
-    </VueFullScreenFileDrop>
     <v-github-ribbon/>
     <div class="message">
       Test your pointing device skills and equipment by clicking through
@@ -23,11 +20,7 @@
   </div>
 </template>
 <script>
-import VueFullScreenFileDrop from 'vue-full-screen-file-drop'
-import 'vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css'
-import utils from '../utils'
 import initTargets from '../init-targets'
-import constants from '../constants'
 import VGithubRibbon from './github-ribbon'
 
 export default {
@@ -37,7 +30,6 @@ export default {
     }
   },
   components: {
-    VueFullScreenFileDrop,
     VGithubRibbon,
   },
   methods: {
@@ -45,32 +37,13 @@ export default {
       this.$refs.file.click()
     },
     fileChosen() {
-      this.onDrop(null, this.$refs.file.files)
-    },
-    onDrop(formData, files) {
-      utils.handleUpload(files, contents => {
-        this.$parent.$emit(constants.events.UPDATE_RECORDING, contents)
-        this.$router.push('/stats')
-      })
+      this.$parent.onDrop(null, this.$refs.file.files)
     },
   },
 }
 </script>
 <style scoped>
-  div.full {
-    height: 100%;
-  }
   input {
     display: none;
-  }
-  #drop {
-    font-size: 50px;
-    padding: 30px;
-    width: 100%;
-    text-align: center;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    color: white;
   }
 </style>

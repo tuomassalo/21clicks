@@ -1,15 +1,26 @@
 <template>
+  <div class="full">
+  <VueFullScreenFileDrop @drop='onDrop'>
+    <div id="drop">Drop a recording.json here.</div>
+  </VueFullScreenFileDrop>
   <router-view :recording="recording"/>
+  </div>
 </template>
 
 <script>
+import VueFullScreenFileDrop from 'vue-full-screen-file-drop'
+import 'vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css'
 import constants from './constants'
+import utils from './utils'
 
 export default {
   data() {
     return {
       recording: null,
     }
+  },
+  components: {
+    VueFullScreenFileDrop,
   },
   created() {
     this.$on(constants.events.UPDATE_RECORDING, recording => {
@@ -36,6 +47,15 @@ export default {
       // }
     })
   },
+  methods: {
+    // called by VueFullScreenFileDrop
+    onDrop(formData, files) {
+      utils.handleUpload(files, contents => {
+        this.recording = contents
+        this.$router.push('/stats')
+      })
+    },
+  },
 }
 </script>
 
@@ -59,7 +79,7 @@ export default {
   a:hover {
     text-decoration: underline;
   }
-  body > div {
+  body > div, div.full {
     height: 100%;
   }
   div.message {
@@ -88,5 +108,15 @@ export default {
   button:hover, button:focus, button:active {
     outline: none;
     border-color: rgba(255, 255, 255,.5);
+  }
+  #drop {
+    font-size: 50px;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    color: white;
   }
 </style>

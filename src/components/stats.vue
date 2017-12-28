@@ -44,7 +44,4 @@ export default {
 }
 </script>
 <style scoped>
-  div.full {
-    height: 100%;
-  }
 </style>
