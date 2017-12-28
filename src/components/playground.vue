@@ -58,10 +58,10 @@ export default {
 }
 div#target {
   position: absolute;
-  background: #143A53;
+  background: #65994A;
 }
 div#target:hover {
-  border: 3px solid blue;
+  border: 3px solid rgba(255, 255, 255, .3);
 }
 #replayCursor {
   border-radius: 50%;
