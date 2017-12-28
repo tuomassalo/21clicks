@@ -20,8 +20,7 @@
 
       <dt>Is this a reaction test?</dt>
       <dd>
-        No. The order of the rectangles is not that random. In fact, the tool
-        should include a hint of the location of the next rectangle.
+        No. The order of the rectangles is not random.
       </dd>
 
       <dt>How about touch devices?</dt>
