@@ -45,6 +45,11 @@ export default {
     VPlayground,
   },
   beforeRouteEnter(to, from, next) {
+    // must do this synchronously, otherwise we get e.g.:
+    //   "Failed to execute 'requestFullscreen' on 'Element':
+    //    API can only be initiated by a user gesture.'"
+    fullScreen.start()
+
     next(vm => {
       // access to component instance via `vm`
       const targetSize = TARGET_SIZES[vm.$route.params.level]
@@ -70,8 +75,6 @@ export default {
   methods: {
     startRecording(targetSize) {
       setTimeout(() => {
-        // fullScreen.start()
-
         setTimeout(() => {
           this.target = null
 
