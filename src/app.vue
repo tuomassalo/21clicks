@@ -73,7 +73,7 @@ export default {
     line-height: 1.9;
   }
   a {
-    color: #E56000;
+    color: rgb(229, 96, 0);
     text-decoration: none;
   }
   a:hover {
@@ -98,7 +98,7 @@ export default {
   button {
     padding: 1.8vw 2vw;
     margin: 1vw 1vw;
-    background: #E56000;
+    background: rgb(229, 96, 0);
     color: white;
     border: 3px solid white;
     border-radius: 8px;

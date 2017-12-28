@@ -1,7 +1,8 @@
 <template>
   <div id="playground-container"
     <v-playground
-      :target="target"
+      :currentTarget="currentTarget"
+      :nextTarget="nextTarget"
       :clickTarget="clickTarget"
       :misclick="misclick"
     />
@@ -32,7 +33,8 @@ export default {
   data() {
     return {
       level: null,
-      target: null,
+      currentTarget: null,
+      nextTarget: null,
       newRecording: null,
       targets: [],
       currentX: null,
@@ -84,7 +86,7 @@ export default {
     startRecording(targetSize) {
       setTimeout(() => {
         setTimeout(() => {
-          this.target = null
+          this.currentTarget = null
 
           this.windowWidth = window.innerWidth
           this.windowHeight = window.innerHeight
@@ -125,17 +127,7 @@ export default {
       }, 100)
     },
     drawTarget({x, y, size, number}) {
-      x = Math.max(size, x)
-      x = Math.min(this.windowWidth - size, x)
-      y = Math.max(size, y)
-      y = Math.min(this.windowHeight - size, y)
-      this.target = {x, y, size, number}
-      moves.push([
-        performance.now(),
-        this.currentX,
-        this.currentY,
-        {type: 'drawTarget', x, y, size, number},
-      ])
+      this.currentTarget = {x, y, size, number}
     },
     clickTarget() {
       moves.push([
@@ -145,9 +137,16 @@ export default {
         {type: 'click'},
       ])
       this.clickedTargetCount++
-      const nextTarget = this.targets.shift()
-      if (nextTarget) {
-        this.drawTarget({...nextTarget})
+      const newTarget = this.targets.shift()
+      if (newTarget) {
+        this.currentTarget = newTarget
+        moves.push([
+          performance.now(),
+          this.currentX,
+          this.currentY,
+          {type: 'drawTarget', ...newTarget},
+        ])
+        this.nextTarget = this.targets[0]
       } else {
         this.stopRecording()
       }

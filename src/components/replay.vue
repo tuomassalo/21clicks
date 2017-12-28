@@ -7,7 +7,7 @@
       transform: `scale(${replayScale})`,
     }">
     <v-playground
-    :target="target"
+    :currentTarget="currentTarget"
     :replayCursor="replayCursor"
     :replayClickIndicators="replayClickIndicators"
     :clickTarget="stopReplay"
@@ -26,7 +26,7 @@ export default {
       replayCursor: null,
       replayClickIndicators: [],
       replayScale: null,
-      target: null,
+      currentTarget: null,
     }
   },
   components: {
@@ -59,7 +59,7 @@ export default {
       const handleActions = move => {
         if (move[3]) {
           if (move[3].type === 'drawTarget') {
-            this.target = move[3]
+            this.currentTarget = move[3]
           } else {
             // console.log('click!', move, this.replayClickIndicators)
             this.replayClickIndicators.push({
@@ -89,8 +89,8 @@ export default {
             i++
           }
           this.replayCursor = {
-            x: moves[i][1] - 5,
-            y: moves[i][2] - 5,
+            x: moves[i][1],
+            y: moves[i][2],
           }
           handleActions(moves[i])
 

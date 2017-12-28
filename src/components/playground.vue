@@ -1,26 +1,38 @@
 <template>
   <div
     id="playground"
-    v-if="target"
+    v-if="currentTarget"
     @click.stop="misclick"
   >
-    <div
-      id="target"
-      v-if="target"
-      :style="{
-        width: target.size + 'px',
-        height: target.size + 'px',
-        left: target.x - target.size / 2 + 'px',
-        top: target.y - target.size / 2 + 'px',
-      }"
-      @click.stop="clickTarget"
-    ><div>{{target.number}}</div></div>
+  <div
+    class="target"
+    id="currentTarget"
+    v-if="currentTarget"
+    :style="{
+      width: currentTarget.size + 'px',
+      height: currentTarget.size + 'px',
+      left: currentTarget.x - currentTarget.size / 2 + 'px',
+      top: currentTarget.y - currentTarget.size / 2 + 'px',
+    }"
+    @click.stop="clickTarget"
+  ><div>{{currentTarget.number}}</div></div>
+  <div
+    class="target"
+    id="nextTarget"
+    v-if="nextTarget"
+    :style="{
+      width: nextTarget.size + 'px',
+      height: nextTarget.size + 'px',
+      left: nextTarget.x - nextTarget.size / 2 + 'px',
+      top: nextTarget.y - nextTarget.size / 2 + 'px',
+    }"
+  ><div>{{nextTarget.number}}</div></div>
     <div
       id="replayCursor"
       v-if="replayCursor"
       :style="{
-        left: replayCursor.x - 5 + 'px',
-        top: replayCursor.y - 5 + 'px',
+        left: replayCursor.x - 7.5 + 'px',
+        top: replayCursor.y - 7.5 + 'px',
       }"
     ></div>
     <transition-group name="fadeout" tag="div">
@@ -30,8 +42,8 @@
         v-for="i of replayClickIndicators"
         :key="i.id"
         :style="{
-          left: i.x - 5 + 'px',
-          top: i.y - 5 + 'px',
+          left: i.x - 17.5 + 'px',
+          top: i.y - 17.5 + 'px',
         }"
       ></div>
   </transition-group>
@@ -40,7 +52,8 @@
 <script>
 export default {
   props: [
-    'target',
+    'currentTarget',
+    'nextTarget',
     'replayCursor',
     'replayClickIndicators',
     'clickTarget',
@@ -56,12 +69,14 @@ export default {
   position: relative;
   transform-origin: left top;
 }
-div#target {
+div.target {
   position: absolute;
-  background: #E56000;
+}
+div#currentTarget {
+  background: rgb(229, 96, 0);
   cursor: pointer;
 }
-div#target div {
+div.target div {
   margin: auto;
   text-align: center;
   color: white;
@@ -69,9 +84,11 @@ div#target div {
   top: 50%;
   transform: translateY(-50%);
 }
-div#target:hover {
-  /*border: 3px solid rgba(255, 255, 255, .3);*/
-  outline: 3px solid #E5600088;
+div#currentTarget:hover {
+  outline: 3px solid rgba(229, 96, 0, .5);
+}
+div#nextTarget {
+    background: #ddd;
 }
 #replayCursor {
   border-radius: 50%;
@@ -84,13 +101,14 @@ div#target:hover {
 }
 .replayClickIndicator {
   border-radius: 50%;
-  border: 1px solid black;
-  width: 10px;
-  height: 10px;
+  border: 4px solid black;
+  width: 40px;
+  height: 40px;
   position: absolute;
   top: 0;
   left: 0;
-  transform: scale(4);
+  /*transform: scale(4);
+  transform-origin: center center;*/
   opacity: 0;
 }
 .replayClickIndicator.misclick {

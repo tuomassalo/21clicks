@@ -3,14 +3,14 @@ export default function initTargets(
   windowHeight = 1,
   targetSize,
 ) {
-  function shuffle(origArray) {
-    const a = [].concat(origArray)
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[a[i], a[j]] = [a[j], a[i]]
-    }
-    return a
-  }
+  // function shuffle(origArray) {
+  //   const a = [].concat(origArray)
+  //   for (let i = a.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1))
+  //     ;[a[i], a[j]] = [a[j], a[i]]
+  //   }
+  //   return a
+  // }
 
   const center = {x: windowWidth / 2, y: windowHeight / 2}
   const corners = [
@@ -25,9 +25,11 @@ export default function initTargets(
   const doneCorners = new Set()
 
   // go from center to each corner, then from each corner to all unvisited corners
-  for (const sourceCorner of shuffle(corners)) {
+  for (const sourceCorner of corners) {
+    // ^ was: ... of shuffle(corners)
     targets.push(center)
-    for (const destinationCorner of shuffle(corners)) {
+    for (const destinationCorner of corners) {
+      // ^ was: ... of shuffle(corners)
       if (
         !doneCorners.has(destinationCorner) &&
         sourceCorner !== destinationCorner
@@ -62,6 +64,10 @@ export default function initTargets(
   // make copies to enable different sizes.
   const ret = []
   for (const t of targets) {
+    t.x = Math.max(targetSize, t.x)
+    t.x = Math.min(windowWidth - targetSize, t.x)
+    t.y = Math.max(targetSize, t.y)
+    t.y = Math.min(windowHeight - targetSize, t.y)
     ret.push({...t, size: targetSize, number: ret.length + 1})
   }
   // return [targets[0], targets[1]]
