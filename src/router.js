@@ -35,6 +35,10 @@ export default new Router({
       component: VStats,
     },
     {
+      path: '/share/:recordingId',
+      component: VStats,
+    },
+    {
       path: '/*',
       redirect: '/',
     },
