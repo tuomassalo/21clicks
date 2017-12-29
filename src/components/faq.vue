@@ -36,8 +36,9 @@
 
       <dt>What about my privacy? You are tracking my every move!</dt>
       <dd>
-        I'm not! Only your browser is. Nothing is sent to the server, not even
-        when you upload a recording.
+        I'm not! Only your browser is. The recording is only sent to a server
+        (Firebase) if you choose 'Share Link'. Otherwise everything happens in
+        the comfort of your own browser.
       </dd>
 
       <dt>I found a bug.</dt>
