@@ -20,7 +20,8 @@
 
       <dt>Is this a reaction test?</dt>
       <dd>
-        No. The order of the rectangles is not random.
+        No. The order of the rectangles is not random, and the recording only
+        starts after the first click.
       </dd>
 
       <dt>How about touch devices?</dt>
