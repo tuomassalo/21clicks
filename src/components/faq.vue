@@ -102,6 +102,7 @@ export default {
   #faq dl {
     max-width: 700px;
     margin: auto;
+    margin-bottom: 50px;
   }
   #faq dt {
     margin-top: 1em;
