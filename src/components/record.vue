@@ -95,7 +95,12 @@ export default {
             this.windowHeight,
             targetSize,
           )
+
+          // first click is programmatic
           this.clickedTargetCount = -1
+
+          // don't start counting yet - only after the first click
+          this.startTime = null
 
           this.newRecording = {
             _: `recorded with <${location.href}>`,
@@ -121,7 +126,8 @@ export default {
 
           this.recorder = setInterval(recordMouse, options.samplingInterval)
           recordMouse()
-          this.startTime = +Date.now()
+
+          // show first target
           this.clickTarget()
         }, 2000)
       }, 100)
@@ -130,13 +136,19 @@ export default {
       this.currentTarget = {x, y, size, number}
     },
     clickTarget() {
-      moves.push([
-        performance.now(),
-        this.currentX,
-        this.currentY,
-        {type: 'click'},
-      ])
+      if (this.targets.length === 20) {
+        this.startTime = +Date.now()
+      }
+      if (this.startTime) {
+        moves.push([
+          performance.now(),
+          this.currentX,
+          this.currentY,
+          {type: 'click'},
+        ])
+      }
       this.clickedTargetCount++
+
       const newTarget = this.targets.shift()
       if (newTarget) {
         this.currentTarget = newTarget
