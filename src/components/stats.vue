@@ -42,7 +42,7 @@ export default {
     } else {
       next(vm => {
         if (!vm.recording) {
-          vm.$route.push('/')
+          vm.$router.push('/')
         }
       })
     }
