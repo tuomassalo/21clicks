@@ -6,6 +6,7 @@
   "dependencies": {
     "eslint": "4.13.1",
     "poi": "9.6.3",
+    "screenfull": "3.3.2",
     "vue-full-screen-file-drop": "1.0.0",
     "vue-router": "3.0.1"
   },

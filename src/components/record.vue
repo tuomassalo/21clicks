@@ -10,7 +10,7 @@
 </template>
 <script>
 import VPlayground from './playground'
-import fullScreen from '../full-screen'
+import screenfull from 'screenfull'
 import initTargets from '../init-targets'
 import constants from '../constants'
 
@@ -50,7 +50,7 @@ export default {
     // must do this synchronously, otherwise we get e.g.:
     //   "Failed to execute 'requestFullscreen' on 'Element':
     //    API can only be initiated by a user gesture.'"
-    fullScreen.start()
+    screenfull.request()
 
     next(vm => {
       // access to component instance via `vm`
@@ -172,7 +172,7 @@ export default {
       ])
     },
     stopRecording(isTimeout) {
-      fullScreen.end()
+      screenfull.exit()
       clearInterval(this.recorder)
       this.recorder = null
       // change timestamps to start from zero.
