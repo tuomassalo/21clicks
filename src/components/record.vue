@@ -78,6 +78,19 @@ export default {
       console.log('stopRec')
       this.stopRecording()
     })
+    this.onWhenActive(constants.events.KEY_C, () => {
+      const ev = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        screenX: this.currentX,
+        screenY: this.currentY,
+      })
+
+      const el = document.elementFromPoint(this.currentX, this.currentY)
+
+      el.dispatchEvent(ev)
+    })
     this.onWhenActive(constants.events.KEY_S, () => {
       this.clickTarget()
     })

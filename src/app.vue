@@ -35,6 +35,9 @@ export default {
       } else if (e.keyCode === 83) {
         // for testing: skip the rectangles by pressing 's'
         this.$emit(constants.events.KEY_S)
+      } else if (e.keyCode === 67) {
+        // for testing: simulate a click with 'c'
+        this.$emit(constants.events.KEY_C)
       }
     })
 

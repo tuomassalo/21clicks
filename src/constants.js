@@ -7,6 +7,7 @@ export default {
   events: {
     UPDATE_RECORDING: 'UPDATE_RECORDING',
     KEY_ESC: 'KEY_ESC',
+    KEY_C: 'KEY_C',
     KEY_S: 'KEY_S',
     RESIZE: 'RESIZE',
   },
